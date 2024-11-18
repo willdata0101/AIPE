@@ -1,7 +1,6 @@
 # Importing libraries
 import boto3
 from botocore.exceptions import ClientError
-#from botocore.client import Config
 
 from pydantic import BaseModel
 from langchain_community.llms import Bedrock
@@ -78,28 +77,28 @@ class MultilingualHistoricalAssistant:
         response = rag_chain.invoke({"input": user_query})
         return response
 
-user_query = "Tell me about D-Day in WWII."
+# user_query = "Tell me about D-Day in WWII."
 
-assistant = MultilingualHistoricalAssistant(user_query)
+# assistant = MultilingualHistoricalAssistant(user_query)
 
-response = assistant.handle_query(user_query)
-response = response['answer']
-clean_response = "".join(response)
-print(clean_response)
+# response = assistant.handle_query(user_query)
+# response = response['answer']
+# clean_response = "".join(response)
+# print(clean_response)
         
-#import streamlit as st
+import streamlit as st
 
 # Building streamlit app
-# st.title("Historical Archive Assistant")
+st.title("Historical Archive Assistant")
 
-# with st.form("my_form"):
-#     text = st.text_area(
-#         "Enter text:",
-#     )
-#     submitted = st.form_submit_button("Submit")
-#     if submitted:
-#         assistant = MultilingualHistoricalAssistant(bedrock_client)
-#         # Handle the query
-#         response = assistant.handle_query(user_query)
-#         clean_response = response['answer'].replace("\n", "")
-#         pp.pprint(clean_response)
+with st.form("my_form"):
+    text = st.text_area(
+        "Enter text:",
+    )
+    submitted = st.form_submit_button("Submit")
+    if submitted:
+        assistant = MultilingualHistoricalAssistant(bedrock_client)
+        # Handle the query
+        response = assistant.handle_query(text)
+        clean_response = response['answer'].replace("\n", "")
+        pp.pprint(clean_response)
