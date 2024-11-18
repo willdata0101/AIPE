@@ -1,13 +1,3 @@
-# %%
-# Installing dependencies
-%pip install --upgrade --quiet boto3
-!pip install wikipedia
-!pip install --upgrade langchain_community
-!pip install --upgrade langchain pydantic
-!pip install -U langchain-aws
-!pip install streamlit
-
-# %%
 # Importing libraries
 import boto3
 from botocore.exceptions import ClientError
@@ -18,7 +8,8 @@ from langchain_community.llms import Bedrock
 from langchain_aws import ChatBedrock
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
-from langchain.retrievers import WikipediaRetriever  # Example for RAG
+#from langchain.retrievers import WikipediaRetriever  # Example for RAG
+from langchain_community.retrievers import WikipediaRetriever
 from langchain_aws.retrievers import AmazonKnowledgeBasesRetriever
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import create_retrieval_chain
@@ -33,44 +24,18 @@ import json
 
 import pprint as pp
 
-# %%
 # Setting session and region variables
 session = boto3.Session()
 region = session.region_name
-#bedrock_config = Config(connect_timeout=120, read_timeout=120, retries={'max_attempts': 0})
 bedrock_client = boto3.client('bedrock-runtime', region_name = region)
-# bedrock_agent_client = boto3.client("bedrock-agent-runtime",
-#                               config=bedrock_config, region_name = region)
-print(region)
 
-# %%
-
-
-# %%
-# 1. Initialize the Multilingual Model (Amazon Bedrock)
 class MultilingualHistoricalAssistant:
     def __init__(self, bedrock_client, supported_languages=None):
         self.bedrock_client = bedrock_client  # Amazon Bedrock client for LLM
         #self.supported_languages = ["en", "es", "fr", "de"]  # Example language support
         self.memory = ConversationBufferMemory()  # Memory to track conversation flow
         #self.retriever = WikipediaRetriever(language="en")  # Example for RAG integration
-
-    # def generate_prompt(self, query):
-    #     # Create the multilingual prompt
-    #     template = """You are a historical archive assistant. 
-    #     Answer the user's historical question accurately using {source}. 
-    #     Question: {question}"""
-    #     prompt_template = PromptTemplate(input_variables=["source", "question", "language"],
-    #                                     template=template)
-    #     prompt = prompt_template.format(source="Wikipedia", question=query)
-    #     return prompt
-
-    # def retrieve_historical_data(self, query, language):
-    #     # Use RAG to retrieve relevant historical data (e.g., Wikipedia)
-    #     self.retriever.lang = language  # Set retriever language
-    #     retrieved_docs = self.retriever.invoke(query)
-    #     return retrieved_docs
-        
+    
     def get_contexts(self, retrievalResults):
         contexts = []
         retrievalResults = response['retrievalResults']
@@ -113,47 +78,28 @@ class MultilingualHistoricalAssistant:
         response = rag_chain.invoke({"input": user_query})
         return response
 
-# %%
-# 2. Set up Bedrock LLM Client (You need your Bedrock client configuration)
-# class BedrockClient:
-#     def __init__(self, api_key):
-#         self.api_key = api_key
+user_query = "Tell me about D-Day in WWII."
 
-#     def generate_response(self, prompt):
-#         # Interact with Amazon Bedrock API to get a response
-#         response = requests.post(
-#             "https://api.bedrock.amazon.com/generate",
-#             json={"prompt": prompt},
-#             headers={"Authorization": f"Bearer {self.api_key}"}
-#         )
-#         return response.json().get("text", "")
+assistant = MultilingualHistoricalAssistant(user_query)
 
-# %%
-import streamlit as st
+response = assistant.handle_query(user_query)
+response = response['answer']
+clean_response = "".join(response)
+print(clean_response)
+        
+#import streamlit as st
 
 # Building streamlit app
-st.title("Historical Archive Assistant")
+# st.title("Historical Archive Assistant")
 
-if __name__ == "__main__":
-    with st.form("my_form"):
-        text = st.text_area(
-            "Enter text:",
-        )
-        submitted = st.form_submit_button("Submit")
-        if submitted:
-            assistant = MultilingualHistoricalAssistant(bedrock_client)
-            # Handle the query
-            response = assistant.handle_query(user_query)
-            clean_response = response['answer'].replace("\n", "")
-            pp.pprint(clean_response)
-
-# %%
-
-
-# %%
-
-
-# %%
-
-
-
+# with st.form("my_form"):
+#     text = st.text_area(
+#         "Enter text:",
+#     )
+#     submitted = st.form_submit_button("Submit")
+#     if submitted:
+#         assistant = MultilingualHistoricalAssistant(bedrock_client)
+#         # Handle the query
+#         response = assistant.handle_query(user_query)
+#         clean_response = response['answer'].replace("\n", "")
+#         pp.pprint(clean_response)
