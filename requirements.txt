@@ -1,6 +1,7 @@
-boto3==1.28.77
-langchain_community==0.0.7
-langchain==0.0.301
-pydantic==2.4.0
-langchain-aws==0.0.8
-streamlit==1.27.1
+boto3
+langchain_community
+langchain
+pydantic
+langchain-aws
+wikipedia
+streamlit
