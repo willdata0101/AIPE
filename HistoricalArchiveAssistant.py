@@ -100,5 +100,6 @@ with st.form("my_form"):
         assistant = MultilingualHistoricalAssistant(bedrock_client)
         # Handle the query
         response = assistant.handle_query(text)
-        clean_response = response['answer'].replace("\n", "")
-        pp.pprint(clean_response)
+        clean_response = response['answer']
+        clean_response = "".join(clean_response)
+        print(clean_response)
