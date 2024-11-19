@@ -29,22 +29,17 @@ region = session.region_name
 bedrock_client = boto3.client('bedrock-runtime', region_name = region)
 
 class MultilingualHistoricalAssistant:
-    def __init__(self, bedrock_client, supported_languages=None):
+    def __init__(self, bedrock_client, language=None):
         self.bedrock_client = bedrock_client  # Amazon Bedrock client for LLM
         #self.supported_languages = ["en", "es", "fr", "de"]  # Example language support
         self.memory = ConversationBufferMemory()  # Memory to track conversation flow
-        #self.retriever = WikipediaRetriever(language="en")  # Example for RAG integration
-    
-    def get_contexts(self, retrievalResults):
-        contexts = []
-        retrievalResults = response['retrievalResults']
-        for retrievedResult in retrievalResults:
-            contexts.append(retrievedResult['content']['text'])
-            return contexts
+        retriever = WikipediaRetriever(language=language)  # Example for RAG integration
         
-    def handle_query(self, user_query):
+    def handle_query(self, user_query, language=None):
         # Use Amazon Bedrock to generate a response
         llm = ChatBedrock(model_id="anthropic.claude-3-5-sonnet-20240620-v1:0")
+
+        retriever = WikipediaRetriever(language=language)
         
         # Creating a system prompt to instruct the model how to answer the query
         system_prompt = (
@@ -70,10 +65,10 @@ class MultilingualHistoricalAssistant:
             ]
         )
 
-        retriever = WikipediaRetriever()
+        #retriever = WikipediaRetriever()
 
         question_answer_chain = create_stuff_documents_chain(llm, prompt)
-        rag_chain = create_retrieval_chain(retriever, question_answer_chain)
+        rag_chain = create_retrieval_chain(self.retriever, question_answer_chain)
         response = rag_chain.invoke({"input": user_query})
         return response
 
@@ -97,6 +92,11 @@ def run_assistant():
             st.write("Hello 👋! Ask me anything about your historical documents.")
 
             with st.form("my_form"):
+                language = st.text_area(
+                    "Enter your language:"
+                )
+
+            with st.form("my_form"):
                 text = st.text_area(
                     "Enter text:",
                 )
@@ -104,7 +104,7 @@ def run_assistant():
     if submitted:
         assistant = MultilingualHistoricalAssistant(bedrock_client)
         # Handle the query
-        response = assistant.handle_query(text)
+        response = assistant.handle_query(text, language)
         clean_response = response['answer']
         clean_response = "".join(clean_response)
         st.write(clean_response)
