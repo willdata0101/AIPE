@@ -92,7 +92,7 @@ import streamlit as st
 st.title("Multilingual Historical Archive Assistant")
 
 def run_assistant():
-    with st.sidebar():
+    with st.sidebar:
 
         with st.chat_message("assistant"):
             st.write("Hello 👋! Ask me anything about your historical documents.")
