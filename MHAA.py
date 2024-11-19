@@ -60,7 +60,7 @@ class MultilingualHistoricalAssistant:
             </n>
             TRANSLATION:
             </n>
-            {translation}
+            {{translation}}
             If you don't know the answer, say you don't
             know. Keep the answer between 500-1000 words.
             If you're using a bulleted or numbered list,
