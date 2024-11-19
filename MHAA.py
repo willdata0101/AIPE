@@ -33,7 +33,7 @@ class MultilingualHistoricalAssistant:
         self.bedrock_client = bedrock_client  # Amazon Bedrock client for LLM
         #self.supported_languages = ["en", "es", "fr", "de"]  # Example language support
         self.memory = ConversationBufferMemory()  # Memory to track conversation flow
-        self.retriever = WikipediaRetriever()  # Example for RAG integration
+        #self.retriever = WikipediaRetriever()  # Example for RAG integration
         
     def handle_query(self, user_query, language=None):
         # Use Amazon Bedrock to generate a response
@@ -65,7 +65,7 @@ class MultilingualHistoricalAssistant:
             ]
         )
 
-        #retriever = WikipediaRetriever()
+        retriever = WikipediaRetriever()
 
         question_answer_chain = create_stuff_documents_chain(llm, prompt)
         rag_chain = create_retrieval_chain(self.retriever, question_answer_chain)
