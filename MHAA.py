@@ -29,11 +29,11 @@ region = session.region_name
 bedrock_client = boto3.client('bedrock-runtime', region_name = region)
 
 class MultilingualHistoricalAssistant:
-    def __init__(self, bedrock_client, language=None):
+    def __init__(self, bedrock_client):
         self.bedrock_client = bedrock_client  # Amazon Bedrock client for LLM
         #self.supported_languages = ["en", "es", "fr", "de"]  # Example language support
         self.memory = ConversationBufferMemory()  # Memory to track conversation flow
-        self.retriever = WikipediaRetriever(language=language)  # Example for RAG integration
+        self.retriever = WikipediaRetriever()  # Example for RAG integration
         
     def handle_query(self, user_query, language=None):
         # Use Amazon Bedrock to generate a response
@@ -99,7 +99,7 @@ def run_assistant():
     if submitted:
         assistant = MultilingualHistoricalAssistant(bedrock_client)
         # Handle the query
-        response = assistant.handle_query(text, language)
+        response = assistant.handle_query(text)
         clean_response = response['answer']
         clean_response = "".join(clean_response)
         st.write(clean_response)
