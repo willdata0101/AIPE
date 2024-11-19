@@ -105,6 +105,4 @@ with st.form("my_form"):
         response = assistant.handle_query(text)
         clean_response = response['answer']
         clean_response = "".join(clean_response)
-
-message = st.chat_message("assistant")
-message.write(clean_response)
+        print(clean_response)
