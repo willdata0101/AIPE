@@ -89,7 +89,10 @@ class MultilingualHistoricalAssistant:
 import streamlit as st
 
 # Building streamlit app
-st.title("Historical Archive Assistant")
+st.title("Multilingual Historical Archive Assistant")
+
+with st.chat_message("assistant"):
+    st.write("Hello 👋! Ask me anything about your historical documents.")
 
 with st.form("my_form"):
     text = st.text_area(
@@ -102,4 +105,6 @@ with st.form("my_form"):
         response = assistant.handle_query(text)
         clean_response = response['answer']
         clean_response = "".join(clean_response)
-        print(clean_response)
+
+message = st.chat_message("assistant")
+message.write(clean_response)
