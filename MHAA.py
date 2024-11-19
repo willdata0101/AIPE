@@ -101,14 +101,14 @@ def run_assistant():
                     "Enter text:",
                 )
                 submitted = st.form_submit_button("Submit")
-                if submitted:
-                    assistant = MultilingualHistoricalAssistant(bedrock_client)
-                    # Handle the query
-                    response = assistant.handle_query(text)
-                    clean_response = response['answer']
-                    clean_response = "".join(clean_response)
-                    st.write(clean_response)
-                else:
-                    print()
+    if submitted:
+        assistant = MultilingualHistoricalAssistant(bedrock_client)
+        # Handle the query
+        response = assistant.handle_query(text)
+        clean_response = response['answer']
+        clean_response = "".join(clean_response)
+        st.write(clean_response)
+    else:
+        print()
 
 run_assistant()
