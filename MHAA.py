@@ -95,13 +95,14 @@ def run_assistant():
                 language = st.text_area(
                     "Enter your language:"
                 )
+                submitted_lang = st.form_submit_button("Submit")
 
             with st.form("my_form"):
                 text = st.text_area(
                     "Enter text:",
                 )
-                submitted = st.form_submit_button("Submit")
-    if submitted:
+                submitted_text = st.form_submit_button("Submit")
+    if submitted_lang and submitted_text:
         assistant = MultilingualHistoricalAssistant(bedrock_client)
         # Handle the query
         response = assistant.handle_query(text, language)
