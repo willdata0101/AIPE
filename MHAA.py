@@ -33,7 +33,7 @@ class MultilingualHistoricalAssistant:
         self.bedrock_client = bedrock_client  # Amazon Bedrock client for LLM
         #self.supported_languages = ["en", "es", "fr", "de"]  # Example language support
         self.memory = ConversationBufferMemory()  # Memory to track conversation flow
-        retriever = WikipediaRetriever(language=language)  # Example for RAG integration
+        self.retriever = WikipediaRetriever(language=language)  # Example for RAG integration
         
     def handle_query(self, user_query, language=None):
         # Use Amazon Bedrock to generate a response
@@ -91,13 +91,7 @@ def run_assistant():
         with st.chat_message("assistant"):
             st.write("Hello 👋! Ask me anything about your historical documents.")
 
-            with st.form("form_0"):
-                language = st.text_area(
-                    "Enter your language:"
-                )
-                submitted_lang = st.form_submit_button("Submit")
-
-            with st.form("form_1"):
+            with st.form("my_form"):
                 text = st.text_area(
                     "Enter text:",
                 )
