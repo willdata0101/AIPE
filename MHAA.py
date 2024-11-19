@@ -35,7 +35,7 @@ class MultilingualHistoricalAssistant:
         self.memory = ConversationBufferMemory()  # Memory to track conversation flow
         #self.retriever = WikipediaRetriever()  # Example for RAG integration
         
-    def handle_query(self, user_query, language=None):
+    def handle_query(self, user_query):
         # Use Amazon Bedrock to generate a response
         llm = ChatBedrock(model_id="anthropic.claude-3-5-sonnet-20240620-v1:0")
         
