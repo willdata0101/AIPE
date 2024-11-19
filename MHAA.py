@@ -105,4 +105,4 @@ with st.form("my_form"):
         response = assistant.handle_query(text)
         clean_response = response['answer']
         clean_response = "".join(clean_response)
-        print(clean_response)
+st.write(clean_response)
