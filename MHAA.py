@@ -91,21 +91,23 @@ import streamlit as st
 # Building streamlit app
 st.title("Multilingual Historical Archive Assistant")
 
-with st.chat_message("assistant"):
-    st.write("Hello 👋! Ask me anything about your historical documents.")
-
 def run_assistant():
-    with st.form("my_form"):
-        text = st.text_area(
-            "Enter text:",
-        )
-        submitted = st.form_submit_button("Submit")
-        if submitted:
-            assistant = MultilingualHistoricalAssistant(bedrock_client)
-            # Handle the query
-            response = assistant.handle_query(text)
-            clean_response = response['answer']
-            clean_response = "".join(clean_response)
-            st.write(clean_response)
+    with st.chat_message("assistant"):
+        st.write("Hello 👋! Ask me anything about your historical documents.")
+
+        with st.form("my_form"):
+            text = st.text_area(
+                "Enter text:",
+            )
+            submitted = st.form_submit_button("Submit")
+            if submitted:
+                assistant = MultilingualHistoricalAssistant(bedrock_client)
+                # Handle the query
+                response = assistant.handle_query(text)
+                clean_response = response['answer']
+                clean_response = "".join(clean_response)
+                st.write(clean_response)
+            else:
+                print()
 
 run_assistant()
