@@ -38,8 +38,6 @@ class MultilingualHistoricalAssistant:
     def handle_query(self, user_query, language=None):
         # Use Amazon Bedrock to generate a response
         llm = ChatBedrock(model_id="anthropic.claude-3-5-sonnet-20240620-v1:0")
-
-        retriever = WikipediaRetriever(language=language)
         
         # Creating a system prompt to instruct the model how to answer the query
         system_prompt = (
