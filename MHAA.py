@@ -53,14 +53,6 @@ class MultilingualHistoricalAssistant:
             tasked with answering questions based on
             archival records. Use the following
             historical documents to answer the question.
-            If the question is not in English, provide
-            a translation from the source language to English
-            after the response in the original language, with
-            a heading in this format:
-            </n>
-            TRANSLATION:
-            </n>
-            {{translation}}
             If you don't know the answer, say you don't
             know. Keep the answer between 500-1000 words.
             If you're using a bulleted or numbered list,
