@@ -91,13 +91,13 @@ def run_assistant():
         with st.chat_message("assistant"):
             st.write("Hello 👋! Ask me anything about your historical documents.")
 
-            with st.form("my_form"):
+            with st.form("form_0"):
                 language = st.text_area(
                     "Enter your language:"
                 )
                 submitted_lang = st.form_submit_button("Submit")
 
-            with st.form("my_form"):
+            with st.form("form_1"):
                 text = st.text_area(
                     "Enter text:",
                 )
