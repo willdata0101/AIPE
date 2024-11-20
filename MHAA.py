@@ -67,10 +67,10 @@ class Assistant():
                 ]
             )
 
-            #retriever = WikipediaRetriever()
+            retriever = WikipediaRetriever()
 
             question_answer_chain = create_stuff_documents_chain(llm, prompt)
-            rag_chain = create_retrieval_chain(self.retriever, question_answer_chain)
+            rag_chain = create_retrieval_chain(retriever, question_answer_chain)
             response = rag_chain.invoke({"input": user_query})
             return response
         
