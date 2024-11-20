@@ -28,7 +28,7 @@ session = boto3.Session()
 region = session.region_name
 bedrock_client = boto3.client('bedrock-runtime', region_name = region)
 
-class Assistant():
+class Assistant:
     def __init__(self, bedrock_client):
         self.bedrock_client = bedrock_client  # Amazon Bedrock client for LLM
         #self.supported_languages = ["en", "es", "fr", "de"]  # Example language support
