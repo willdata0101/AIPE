@@ -80,11 +80,11 @@ def run_assistant():
                      sufficient context. This will result in higher
                      quality responses.""")
 
-    with st.form("my_form"):
-        text = st.text_area(
-            "Enter text:",
-        )
-        submitted = st.form_submit_button("Submit")
+            with st.form("my_form"):
+                text = st.text_area(
+                    "Enter text:",
+                )
+                submitted = st.form_submit_button("Submit")
     
     if submitted:
         message = st.chat_message("assistant")
