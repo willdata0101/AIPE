@@ -54,28 +54,23 @@ class Assistant():
             {context}
             """
         )
-
-        try:
             
-            print("Researching your question...")
+        print("Researching your question...")
 
-            prompt = ChatPromptTemplate.from_messages(
-                [
-                    ("system", system_prompt),
-                    ("human", "{input}")
-        
-                ]
-            )
+        prompt = ChatPromptTemplate.from_messages(
+            [
+                ("system", system_prompt),
+                ("human", "{input}")
+    
+            ]
+        )
 
-            retriever = WikipediaRetriever()
+        retriever = WikipediaRetriever()
 
-            question_answer_chain = create_stuff_documents_chain(llm, prompt)
-            rag_chain = create_retrieval_chain(retriever, question_answer_chain)
-            response = rag_chain.invoke({"input": user_query})
-            return response
-        
-        except Exception as e:
-            print(f"Error occured while handling query: {e}. Please try again.")
+        question_answer_chain = create_stuff_documents_chain(llm, prompt)
+        rag_chain = create_retrieval_chain(retriever, question_answer_chain)
+        response = rag_chain.invoke({"input": user_query})
+        return response
 
 
 # user_query = "Tell me about D-Day in WWII."
