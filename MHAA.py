@@ -54,8 +54,6 @@ class Assistant():
             {context}
             """
         )
-            
-        print("Researching your question...")
 
         prompt = ChatPromptTemplate.from_messages(
             [
@@ -65,7 +63,7 @@ class Assistant():
             ]
         )
 
-        retriever = WikipediaRetriever(lang=None)
+        retriever = WikipediaRetriever()
 
         question_answer_chain = create_stuff_documents_chain(llm, prompt)
         rag_chain = create_retrieval_chain(retriever, question_answer_chain)
