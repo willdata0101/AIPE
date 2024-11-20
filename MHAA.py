@@ -27,14 +27,13 @@ import pprint as pp
 session = boto3.Session()
 region = session.region_name
 bedrock_client = boto3.client('bedrock-runtime', region_name = region)
-retriever = WikipediaRetriever()
 
 class Assistant():
-    def __init__(self, bedrock_client, retriever):
+    def __init__(self, bedrock_client):
         self.bedrock_client = bedrock_client  # Amazon Bedrock client for LLM
         #self.supported_languages = ["en", "es", "fr", "de"]  # Example language support
         self.memory = ConversationBufferMemory()  # Memory to track conversation flow
-        self.retriever = retriever # Example for RAG integration
+        self.retriever = WikipediaRetriever() # Example for RAG integration
         
     def handle_query(self, user_query):
         # Use Amazon Bedrock to generate a response
