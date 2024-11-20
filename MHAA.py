@@ -22,8 +22,8 @@ region = session.region_name
 bedrock_client = boto3.client('bedrock-runtime', region_name = region)
 
 # Helper function for processing Wikipedia docs
-def format_docs(docs):
-    return "\n\n".join(doc.page_content for doc in docs)
+# def format_docs(docs):
+#     return "\n\n".join(doc.page_content for doc in docs)
 
 class Assistant:
     def __init__(self, bedrock_client):
@@ -92,8 +92,7 @@ def run_assistant():
         assistant = Assistant(bedrock_client)
         # Handle the query
         response = assistant.handle_query(text)
-        clean_response = response['answer']
-        clean_response = "".join(clean_response)
+        clean_response = "".join(response['answer'])
         st.write(clean_response)
     else:
         print()
