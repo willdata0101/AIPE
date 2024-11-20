@@ -65,7 +65,7 @@ class Assistant():
             ]
         )
 
-        retriever = WikipediaRetriever()
+        retriever = WikipediaRetriever(lang=None)
 
         question_answer_chain = create_stuff_documents_chain(llm, prompt)
         rag_chain = create_retrieval_chain(retriever, question_answer_chain)
@@ -109,6 +109,5 @@ def run_assistant():
         st.write(clean_response)
     else:
         print()
-    st.rerun()
 
 run_assistant()
