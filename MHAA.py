@@ -7,21 +7,12 @@ from langchain_community.llms import Bedrock
 from langchain_aws import ChatBedrock
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
-#from langchain.retrievers import WikipediaRetriever  # Example for RAG
 from langchain_community.retrievers import WikipediaRetriever
 from langchain_aws.retrievers import AmazonKnowledgeBasesRetriever
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
-
-import requests
-
-import getpass
-
-import json
-
-import pprint as pp
 
 # Setting session and region variables
 session = boto3.Session()
@@ -70,15 +61,6 @@ class Assistant:
         response = rag_chain.invoke({"input": user_query})
         return response
 
-# user_query = "Tell me about D-Day in WWII."
-
-# assistant = Assistant(user_query)
-
-# response = assistant.handle_query(user_query)
-# response = response['answer']
-# clean_response = "".join(response)
-# print(clean_response)
-        
 import streamlit as st
 
 # Building streamlit app
