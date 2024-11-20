@@ -105,8 +105,8 @@ def run_assistant():
         clean_response = response['answer']
         clean_response = "".join(clean_response)
         st.write(clean_response)
-        st.rerun()
     else:
         print()
+    st.rerun()
 
 run_assistant()
