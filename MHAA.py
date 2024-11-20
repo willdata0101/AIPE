@@ -28,12 +28,12 @@ session = boto3.Session()
 region = session.region_name
 bedrock_client = boto3.client('bedrock-runtime', region_name = region)
 
-class MultilingualHistoricalAssistant:
-    def __init__(self, bedrock_client):
+class Assistant():
+    def __init__(self, bedrock_client, retriever):
         self.bedrock_client = bedrock_client  # Amazon Bedrock client for LLM
         #self.supported_languages = ["en", "es", "fr", "de"]  # Example language support
         self.memory = ConversationBufferMemory()  # Memory to track conversation flow
-        #self.retriever = WikipediaRetriever()  # Example for RAG integration
+        self.retriever = retriever or WikipediaRetriever()  # Example for RAG integration
         
     def handle_query(self, user_query):
         # Use Amazon Bedrock to generate a response
@@ -55,20 +55,28 @@ class MultilingualHistoricalAssistant:
             """
         )
 
-        prompt = ChatPromptTemplate.from_messages(
-            [
-                ("system", system_prompt),
-                ("human", "{input}")
-    
-            ]
-        )
+        try:
+            
+            print("Researching your question...")
 
-        retriever = WikipediaRetriever()
+            prompt = ChatPromptTemplate.from_messages(
+                [
+                    ("system", system_prompt),
+                    ("human", "{input}")
+        
+                ]
+            )
 
-        question_answer_chain = create_stuff_documents_chain(llm, prompt)
-        rag_chain = create_retrieval_chain(retriever, question_answer_chain)
-        response = rag_chain.invoke({"input": user_query})
-        return response
+            #retriever = WikipediaRetriever()
+
+            question_answer_chain = create_stuff_documents_chain(llm, prompt)
+            rag_chain = create_retrieval_chain(retriever, question_answer_chain)
+            response = rag_chain.invoke({"input": user_query})
+            return response
+        
+        except Exception as e:
+            print(f"Error occured while handling query: {e}. Please try again.")
+
 
 # user_query = "Tell me about D-Day in WWII."
 
@@ -94,8 +102,9 @@ def run_assistant():
                     "Enter text:",
                 )
                 submitted = st.form_submit_button("Submit")
+    
     if submitted:
-        assistant = MultilingualHistoricalAssistant(bedrock_client)
+        assistant = Assistant(bedrock_client)
         # Handle the query
         response = assistant.handle_query(text)
         clean_response = response['answer']
