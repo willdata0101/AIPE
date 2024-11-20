@@ -65,10 +65,15 @@ class Assistant():
 
         retriever = WikipediaRetriever()
 
-        question_answer_chain = create_stuff_documents_chain(llm, prompt)
-        rag_chain = create_retrieval_chain(retriever, question_answer_chain)
-        response = rag_chain.invoke({"input": user_query})
-        return response
+        try:
+            if not user_query:
+                raise ValueError("Query cannot be empty.")
+            question_answer_chain = create_stuff_documents_chain(llm, prompt)
+            rag_chain = create_retrieval_chain(retriever, question_answer_chain)
+            response = rag_chain.invoke({"input": user_query})
+            return response
+        except:
+            print("An error occured")
 
 
 # user_query = "Tell me about D-Day in WWII."
