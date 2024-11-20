@@ -63,7 +63,7 @@ class Assistant:
 
         question_answer_chain = create_stuff_documents_chain(llm, prompt)
         rag_chain = create_retrieval_chain(retriever, question_answer_chain)
-        response = rag_chain.invoke({"input": {user_query}})
+        response = rag_chain.invoke({"input": user_query})
 
         return response
 
@@ -80,21 +80,28 @@ def run_assistant():
                      sufficient context. This will result in higher
                      quality responses.""")
 
-            with st.form("my_form"):
-                text = st.text_area(
-                    "Enter text:",
-                )
-                submitted = st.form_submit_button("Submit")
-    
-    if submitted:
+            # with st.form("my_form"):
+            #     text = st.text_area(
+            #         "Enter text:",
+            #     )
+            #     submitted = st.form_submit_button("Submit")
+    prompt = st.chat_input("Ask me anything")
+    if prompt:
         message = st.chat_message("assistant")
         message.write("Researching your question...")
         assistant = Assistant(bedrock_client)
         # Handle the query
-        response = assistant.handle_query(text)
+        response = assistant.handle_query(prompt)
         clean_response = "".join(response['answer'])
         st.write(clean_response)
-    else:
-        print()
 
 run_assistant()
+
+# Debugging code
+
+# query = "Tell me about World War II."
+
+# assistant = Assistant(bedrock_client)
+# response = assistant.handle_query(query)
+# clean_response = "".join(response['answer'])
+# print(clean_response)
