@@ -33,8 +33,8 @@ This repository contains the Python code for a chatbot designed to assist users 
 2. Ask the assistant any question about your historical documents!
 
 ### File Structure
-historical-archive-assistant/
 ```
+historical-archive-assistant/
 ├── MHAA.py          # Main entry point for the chatbot
 ├── requirements.txt    # Python dependencies
 ├── README.md           # Project documentation
