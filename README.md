@@ -17,7 +17,7 @@ This repository contains the Python code for a chatbot designed to assist users 
 1. Clone the repository:
    ```bash
    git clone https://github.com/willdata0101/AIPE.git
-   cd historical-archive-assistant
+   cd AIPE
 
 2. Create and activate a virtual environment:
    ```python3 -m venv venv
