@@ -34,7 +34,7 @@ This repository contains the Python code for a chatbot designed to assist users 
 
 ### File Structure
 ```
-historical-archive-assistant/
+AIPE/
 ├── MHAA.py          # Main entry point for the chatbot
 ├── requirements.txt    # Python dependencies
 ├── README.md           # Project documentation
