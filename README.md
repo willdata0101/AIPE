@@ -4,7 +4,6 @@ This repository contains the Python code for a chatbot designed to assist users 
 
 ## Features
 - **Question Answering**: Responds to user queries about historical topics.
-- **Search Functionality**: Provides a search mechanism for specific historical archives.
 - **Customizable Knowledge Base**: Easily extendable to include additional historical data sources.
 
 ## Getting Started
