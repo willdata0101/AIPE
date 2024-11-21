@@ -5,7 +5,6 @@ from botocore.exceptions import ClientError
 from pydantic import BaseModel
 from langchain_community.llms import Bedrock
 from langchain_aws import ChatBedrock
-from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain_community.retrievers import WikipediaRetriever
 from langchain_aws.retrievers import AmazonKnowledgeBasesRetriever
@@ -13,23 +12,16 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnablePassthrough
 
 # Setting session and region variables
 session = boto3.Session()
 region = session.region_name
 bedrock_client = boto3.client('bedrock-runtime', region_name = region)
 
-# Helper function for processing Wikipedia docs
-# def format_docs(docs):
-#     return "\n\n".join(doc.page_content for doc in docs)
-
 class Assistant:
     def __init__(self, bedrock_client):
         self.bedrock_client = bedrock_client  # Amazon Bedrock client for LLM
         self.memory = ConversationBufferMemory()  # Memory to track conversation flow
-        #self.retriever = WikipediaRetriever() # Example for RAG integration
         
     def handle_query(self, user_query):
         # Use Amazon Bedrock to generate a response
@@ -75,16 +67,12 @@ st.title("Multilingual Historical Archive Assistant")
 def run_assistant():
     with st.sidebar:
         with st.chat_message("assistant"):
-            st.write("""Hello 👋! Ask me anything about your historical documents.
+            st.write("""Hello 👋! Ask me anything about your historical documents. 📜
+                     I can take questions in any language.
                      Please make sure your question is clear, concise, and provides
                      sufficient context. This will result in higher
-                     quality responses.""")
+                     quality responses. ✨""")
 
-            # with st.form("my_form"):
-            #     text = st.text_area(
-            #         "Enter text:",
-            #     )
-            #     submitted = st.form_submit_button("Submit")
     prompt = st.chat_input("Ask me anything")
     if prompt:
         message = st.chat_message("assistant")
@@ -96,12 +84,3 @@ def run_assistant():
         st.write(clean_response)
 
 run_assistant()
-
-# Debugging code
-
-# query = "Tell me about World War II."
-
-# assistant = Assistant(bedrock_client)
-# response = assistant.handle_query(query)
-# clean_response = "".join(response['answer'])
-# print(clean_response)
